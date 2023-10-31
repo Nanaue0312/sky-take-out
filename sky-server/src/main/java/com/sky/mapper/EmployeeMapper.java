@@ -30,6 +30,17 @@ public interface EmployeeMapper {
 			"(#{name},#{username},#{password},#{phone},#{sex},#{idNumber},#{status},#{createTime},#{updateTime},#{createUser},#{updateUser})")
 	boolean insert(Employee employee);
 
-	
+
 	Page<Employee> pageQuery(EmployeePageQueryDTO employeePageQueryDTO);
+
+	void update(Employee employee);
+
+	/**
+	 * 根据id查询员工信息
+	 *
+	 * @param id 员工id
+	 * @return
+	 */
+	@Select("select * from employee where id=#{id}")
+	Employee getById(Long id);
 }
