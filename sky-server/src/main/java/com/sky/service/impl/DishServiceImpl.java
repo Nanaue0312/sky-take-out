@@ -18,6 +18,7 @@ import com.sky.vo.DishVO;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.CollectionUtils;
@@ -34,6 +35,8 @@ public class DishServiceImpl implements DishService {
 	private DishFlavorMapper dishFlavorMapper;
 	@Autowired
 	private SetmealDishMapper setmealDishMapper;
+	@Autowired
+	private RedisTemplate redisTemplate;
 
 	@Override
 	@Transactional
@@ -60,6 +63,7 @@ public class DishServiceImpl implements DishService {
 	 */
 	@Override
 	public PageResult pageQuery(DishPageQueryDTO dishPageQueryDTO) {
+
 		PageHelper.startPage(dishPageQueryDTO.getPage(), dishPageQueryDTO.getPageSize());
 		Page<DishVO> page = dishMapper.pageQuery(dishPageQueryDTO);
 
@@ -157,5 +161,11 @@ public class DishServiceImpl implements DishService {
 		}
 
 		return dishVOList;
+	}
+
+	@Override
+	public void startOrStop(int status, Long id) {
+		Dish dish = Dish.builder().id(id).status(status).build();
+		dishMapper.update(dish);
 	}
 }

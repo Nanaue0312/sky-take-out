@@ -12,9 +12,9 @@ import org.springframework.data.redis.serializer.RedisSerializer;
 @Slf4j
 public class RedisConfiguration {
 	@Bean
-	public RedisTemplate<Object, Object> redisTemplate(RedisConnectionFactory redisConnectionFactory) {
+	public RedisTemplate<String, String> redisTemplate(RedisConnectionFactory redisConnectionFactory) {
 		log.info("开始创建redisTemplate");
-		RedisTemplate<Object, Object> redisTemplate = new RedisTemplate();
+		RedisTemplate<String, String> redisTemplate = new RedisTemplate();
 		// 设置redis连接工厂
 		redisTemplate.setConnectionFactory(redisConnectionFactory);
 		// 设置redis key序列化器
