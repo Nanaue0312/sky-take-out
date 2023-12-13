@@ -11,4 +11,5 @@
             #{orderDetail.setmealId},#{orderDetail.dishFlavor},#{orderDetail.amount})
         </foreach>
     </insert>
+
 </mapper>
