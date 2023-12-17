@@ -12,84 +12,93 @@ import org.apache.ibatis.annotations.Select;
 import org.apache.ibatis.annotations.Update;
 
 import java.util.List;
+import java.util.Map;
 
 @Mapper
 public interface SetmealMapper {
 
-	/**
-	 * 根据分类id查询套餐的数量
-	 *
-	 * @param id
-	 * @return
-	 */
-	@Select("select count(id) from setmeal where category_id = #{categoryId}")
-	Integer countByCategoryId(Long id);
+    /**
+     * 根据分类id查询套餐的数量
+     *
+     * @param id
+     * @return
+     */
+    @Select("select count(id) from setmeal where category_id = #{categoryId}")
+    Integer countByCategoryId(Long id);
 
-	/**
-	 * 动态条件查询套餐
-	 *
-	 * @param setmeal
-	 * @return
-	 */
-	List<Setmeal> list(Setmeal setmeal);
+    /**
+     * 动态条件查询套餐
+     *
+     * @param setmeal
+     * @return
+     */
+    List<Setmeal> list(Setmeal setmeal);
 
-	/**
-	 * 根据套餐id查询菜品选项
-	 *
-	 * @param setmealId
-	 * @return
-	 */
-	@Select("select sd.name, sd.copies, d.image, d.description " +
-			"from setmeal_dish sd left join dish d on sd.dish_id = d.id " +
-			"where sd.setmeal_id = #{setmealId}")
-	List<DishItemVO> getDishItemBySetmealId(Long setmealId);
+    /**
+     * 根据套餐id查询菜品选项
+     *
+     * @param setmealId
+     * @return
+     */
+    @Select("select sd.name, sd.copies, d.image, d.description " +
+            "from setmeal_dish sd left join dish d on sd.dish_id = d.id " +
+            "where sd.setmeal_id = #{setmealId}")
+    List<DishItemVO> getDishItemBySetmealId(Long setmealId);
 
-	/**
-	 * 新增套餐
-	 *
-	 * @param setmeal 套餐
-	 */
-	@AutoFill(OperationType.INSERT)
-	void save(Setmeal setmeal);
+    /**
+     * 新增套餐
+     *
+     * @param setmeal 套餐
+     */
+    @AutoFill(OperationType.INSERT)
+    void save(Setmeal setmeal);
 
-	/**
-	 * 分页查询套餐
-	 *
-	 * @param setmealPageQueryDTO 查询DTO
-	 * @return
-	 */
-	Page<SetmealVO> page(SetmealPageQueryDTO setmealPageQueryDTO);
+    /**
+     * 分页查询套餐
+     *
+     * @param setmealPageQueryDTO 查询DTO
+     * @return
+     */
+    Page<SetmealVO> page(SetmealPageQueryDTO setmealPageQueryDTO);
 
-	/**
-	 * 批量删除套餐
-	 *
-	 * @param ids 套餐id集合
-	 */
-	void deleteBatch(List<Long> ids);
+    /**
+     * 批量删除套餐
+     *
+     * @param ids 套餐id集合
+     */
+    void deleteBatch(List<Long> ids);
 
-	/**
-	 * 更新套餐信息
-	 *
-	 * @param setmeal 套餐信息
-	 */
-	@AutoFill(OperationType.UPDATE)
-	void update(Setmeal setmeal);
+    /**
+     * 更新套餐信息
+     *
+     * @param setmeal 套餐信息
+     */
+    @AutoFill(OperationType.UPDATE)
+    void update(Setmeal setmeal);
 
-	/**
-	 * 根据id查询套餐
-	 *
-	 * @param id 套餐id
-	 * @return
-	 */
-	@Select("select * from setmeal where id=#{id}")
-	Setmeal getById(Long id);
+    /**
+     * 根据id查询套餐
+     *
+     * @param id 套餐id
+     * @return
+     */
+    @Select("select * from setmeal where id=#{id}")
+    Setmeal getById(Long id);
 
-	/**
-	 * 更新套餐销售状态
-	 *
-	 * @param status    销售状态
-	 * @param setmealId 套餐id
-	 */
-	@Update("update setmeal set status=#{status} where id=#{setmealId}")
-	void updateStatus(Integer status, Long setmealId);
+    /**
+     * 更新套餐销售状态
+     *
+     * @param status    销售状态
+     * @param setmealId 套餐id
+     */
+    @Update("update setmeal set status=#{status} where id=#{setmealId}")
+    void updateStatus(Integer status, Long setmealId);
+
+    /**
+     * 根据条件统计套餐数量
+     *
+     * @param map
+     * @return
+     */
+    Integer countByMap(Map map);
 }
